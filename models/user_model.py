@@ -3,6 +3,8 @@ from database.connection import Base
 from sqlalchemy.orm import relationship
 from residents_model import Resident
 from assessments_model import PhysioAssessment, MobillityAssessment
+from progress_note_model import ProgressNote
+from chart_model import PainChart
 
 class User(Base):
     __tablename__ = "users"
@@ -20,3 +22,5 @@ class User(Base):
     responsible_residents = relationship("Resident",foreign_keys="Resident.responsible_physio_id", back_populates="physio_responsible")
     physio_assessments = relationship("PhysioAssessment", foreign_keys=[PhysioAssessment.Physio_id], back_populates="physio")
     mobillity_assessment = relationship("MobillityAssessment", foreign_keys=[MobillityAssessment.physio_id], back_populates="physios")
+    progress_notes = relationship("ProgressNote", foreign_keys=[ProgressNote.physio_id], back_populates="physio")
+    pain_level = relationship("PainChart", foreign_keys=[PainChart.physio_id], back_populates="physio")
