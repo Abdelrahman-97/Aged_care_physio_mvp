@@ -18,6 +18,7 @@ def get_db():
     try:
         yield db
     except Exception as e:
-        return f"There is an connection_error: {e}"
+        db.rollback()
+        raise
     finally:
         db.close()

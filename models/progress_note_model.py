@@ -1,8 +1,7 @@
 from sqlalchemy import Integer, String, DateTime,Column, func, ForeignKey
 from sqlalchemy.orm import relationship
 from database.connection import Base
-from residents_model import Resident
-from user_model import User
+
 
 class ProgressNote(Base):
     __tablename__ = "progress_notes"
@@ -10,10 +9,10 @@ class ProgressNote(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
     subjective = Column(String, nullable=False)
     objective = Column(String, nullable=False)
-    assessmet = Column(String, nullable=False)
+    assessment = Column(String, nullable=False)
     plan = Column(String, nullable=False)
-    resident_id = Column(Integer, ForeignKey("Resident.id"), nullable=False, index=True)
-    physio_id = Column(Integer, ForeignKey("User.id"), nullable=False, index=True)
+    resident_id = Column(Integer, ForeignKey("residents.id"), nullable=False, index=True)
+    physio_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
