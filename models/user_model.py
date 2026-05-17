@@ -15,8 +15,8 @@ class User(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(),onupdate=func.now())
 
-    created_residents = relationship("Resident", back_populates="physio_create")
-    responsible_residents = relationship("Resident", back_populates="physio_responsible")
+    created_residents = relationship("Resident", foreign_keys="Resident.created_by_physio_id", back_populates="physio_create")
+    responsible_residents = relationship("Resident", foreign_keys="Resident.responsible_physio_id", back_populates="physio_responsible")
     physio_assessments = relationship("PhysioAssessment", back_populates="physio")
     mobility_assessment = relationship("MobilityAssessment", back_populates="physios")
     progress_notes = relationship("ProgressNote", back_populates="physio")
