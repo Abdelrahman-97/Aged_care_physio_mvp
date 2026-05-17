@@ -2,4 +2,4 @@ from .assessment_schema import (PhysioAssessmentCreate, PhysioAssessmentResponse
 from .chart_schema import (ChartCreate, ChartResponse)
 from .progress_note_schema import (ProgressNoteCreate, ProgressNoteResponse)
 from .residentschema import (ResidentCreate, ResidentResponse, ResidentUpdate)
-from .userschema import (UserCreate, UserLogin, UserResponse)
+from .userschema import (UserCreate, UserLogin, UserResponse, TokenResponse)

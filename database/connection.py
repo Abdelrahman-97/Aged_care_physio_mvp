@@ -1,13 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv
-import os
+from core.config import get_settings
 
-load_dotenv()
+settings = get_settings()
 
-DB_url = os.getenv("DATABASE_URL")
-
-engine = create_engine(DB_url)
+engine = create_engine(settings.database_url, connect_args={"check_same_thread": False})
 
 Base = declarative_base()
 
