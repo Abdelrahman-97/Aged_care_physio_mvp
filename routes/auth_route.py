@@ -32,7 +32,7 @@ def login(user_data:UserLogin, db: Session= Depends(get_db)):
 def register(user_data: UserCreate, db: Session=Depends(get_db)):
     user = get_user_by_email(db, user_data.email)
 
-    if not user:
+    if user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, 
                             detail="User is already found")
     new_user = create_user(db, user_data)

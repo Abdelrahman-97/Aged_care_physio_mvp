@@ -5,14 +5,14 @@ from models import User
 from core.config import get_settings
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
-from fastapi.security import OAuth2AuthorizationCodeBearer
+from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from core import Settings, get_settings
 from database import get_db
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oath2_schema = OAuth2AuthorizationCodeBearer(tokenUrl="/auth/login")
+oath2_schema = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def hash_password(password:str)-> str:
     return pwd_context.hash(password)
@@ -43,13 +43,13 @@ def create_access_token(data:dict)->str:
 
     return encoded_jwt
 
-def get_user_by_id(db:Session, user_data: UserCreate):
-    return db.query.filter(User.id == user_data.id).first()
+def get_user_by_id(db: Session, user_id: str):
+    return db.query(User).filter(User.id == int(user_id)).first()
 
 def get_current_user(db: Session=Depends(get_db), settings: Settings=Depends(get_settings), 
                      token: str=Depends(oath2_schema)):
     try:
-        payload = token.decode(token, settings.secret_key, settings.algorithm)
+        payload = jwt.decode(token, settings.secret_key, settings.algorithm)
         user_id = payload.get("sub")
         if user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token")
