@@ -62,3 +62,12 @@ def get_current_user(db: Session=Depends(get_db), settings: Settings=Depends(get
         return user
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Credentials")
+
+
+def require_role(required_role:str):
+    def checker(current_user: User=(get_current_user))
+        if current_user.role != required_role:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                detail=f" Access is restricted to {required_role}")
+        return current_user
+    return checker
