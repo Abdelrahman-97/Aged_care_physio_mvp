@@ -22,6 +22,7 @@ class PhysioAssessment(Base):
     pain_management = Column(String, nullable=False)
     resident_id = Column(Integer, ForeignKey("residents.id"), nullable=False, index=True)
     physio_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    is_active = Column(bool, default=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
@@ -36,6 +37,7 @@ class MobilityAssessment(Base):
     transfers = Column(String, nullable=False)
     walking = Column(String, nullable=False)
     bed_mobility = Column(String, nullable=False)
+    is_active = Column(bool, default=True)
     resident_id = Column(Integer, ForeignKey("residents.id"), nullable=False, index=True)
     physio_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     created_at = Column(DateTime, server_default=func.now())
