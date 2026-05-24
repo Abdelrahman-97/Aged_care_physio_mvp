@@ -6,7 +6,8 @@ from fastapi import HTTPException, status
 
 
 
-def create_physio_assessment(db:Session, data: PhysioAssessmentCreate, physio_id:int, resident_id:int ):
+def create_physio_assessment(db:Session, data: PhysioAssessmentCreate, 
+                             physio_id:int, resident_id:int ):
     obj = PhysioAssessment(**data.model_dump(), 
                            resident_id=resident_id, 
                            physio_id=physio_id)

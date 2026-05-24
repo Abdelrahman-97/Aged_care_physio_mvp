@@ -39,7 +39,7 @@ def create_access_token(data:dict)->str:
     expire = datetime.now(timezone.utc) + timedelta(minutes=settings.access_token_expire_minutes)
     to_encode.update({"exp":expire})
 
-    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithms=settings.algorithm)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
 
     return encoded_jwt
 
@@ -49,7 +49,7 @@ def get_user_by_id(db: Session, user_id: str):
 def get_current_user(db: Session=Depends(get_db), settings: Settings=Depends(get_settings), 
                      token: str=Depends(oath2_schema)):
     try:
-        payload = jwt.decode(token, settings.secret_key, algorithm=[settings.algorithm])
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
         user_id = payload.get("sub")
         if user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token")
