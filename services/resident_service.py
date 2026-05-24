@@ -38,8 +38,9 @@ def update_resident(db: Session, data:ResidentUpdate, resident_id:int):
         db.rollback()
         raise
 
-def archive_resident(db:Session, resident_id:int):
-    obj = get_resident_by_id(db, resident_id)
+def archive_resident(db:Session, assessment_id:int):
+    obj = get_resident_by_id(db, assessment_id)
+    
     obj.is_active = False
     try:
         db.commit()

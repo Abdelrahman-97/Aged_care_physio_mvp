@@ -49,7 +49,7 @@ def get_user_by_id(db: Session, user_id: str):
 def get_current_user(db: Session=Depends(get_db), settings: Settings=Depends(get_settings), 
                      token: str=Depends(oath2_schema)):
     try:
-        payload = jwt.decode(token, settings.secret_key, settings.algorithm)
+        payload = jwt.decode(token, settings.secret_key, algorithm=[settings.algorithm])
         user_id = payload.get("sub")
         if user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token")
@@ -65,7 +65,7 @@ def get_current_user(db: Session=Depends(get_db), settings: Settings=Depends(get
 
 
 def require_role(required_role:str):
-    def checker(current_user: User=(get_current_user))
+    def checker(current_user: User=Depends(get_current_user)):
         if current_user.role != required_role:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                                 detail=f" Access is restricted to {required_role}")

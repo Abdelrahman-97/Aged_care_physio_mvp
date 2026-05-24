@@ -10,6 +10,7 @@ class PainChart(Base):
     pain_level = Column(Integer, nullable=False)
     resident_id = Column(Integer, ForeignKey("residents.id"), nullable=False, index=True)
     physio_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    is_active = Column(bool,default=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 

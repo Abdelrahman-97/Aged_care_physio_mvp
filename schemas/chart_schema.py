@@ -1,11 +1,11 @@
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
-class ChartCreate(BaseModel):
+class PainChartCreate(BaseModel):
     pain_level: int= Field(ge=0, le=10)
     resident_id: int
 
-class ChartResponse(BaseModel):
+class PainChartResponse(BaseModel):
     id: int
     pain_level: int
     resident_id: int

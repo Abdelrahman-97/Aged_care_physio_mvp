@@ -1,5 +1,5 @@
 from .assessment_schema import (PhysioAssessmentCreate, PhysioAssessmentResponse, PhysioAssessmentUpdate, MobilityAssessmentCreate, MobilityAssessmentResponse, MobilityAssessmentUpdate)
-from .chart_schema import (ChartCreate, ChartResponse)
+from .chart_schema import (PainChartCreate, PainChartResponse)
 from .progress_note_schema import (ProgressNoteCreate, ProgressNoteResponse)
 from .residentschema import (ResidentCreate, ResidentResponse, ResidentUpdate)
 from .userschema import (UserCreate, UserLogin, UserResponse, TokenResponse)
