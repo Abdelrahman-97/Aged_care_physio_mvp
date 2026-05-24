@@ -8,7 +8,7 @@ from sqlalchemy.orm  import Session
 
 
 def create_progress_note(db:Session, data:ProgressNoteCreate, resident_id:int, physio_id:int):
-    obj = ProgressNote(**data.model_dump(), resident_id=resident_id, physio_id=physio_id)
+    obj = ProgressNote(**data.model_dump(exclude={"resident_id"}), resident_id=resident_id, physio_id=physio_id)
     try:
         db.add(obj)
         db.commit()

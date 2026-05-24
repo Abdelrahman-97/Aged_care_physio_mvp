@@ -5,7 +5,7 @@ from typing import Optional
 
 
 def create_pain_chart(db: Session, data:PainChartCreate, resident_id:int, physio_id:int):
-    obj = PainChart(**data.model_dump(), resident_id=resident_id, physio_id=physio_id)
+    obj = PainChart(**data.model_dump(exclude={"resident_id"}), resident_id=resident_id, physio_id=physio_id)
     try:
         db.add(obj)
         db.commit()

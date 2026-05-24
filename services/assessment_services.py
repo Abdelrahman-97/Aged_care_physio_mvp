@@ -8,7 +8,7 @@ from fastapi import HTTPException, status
 
 def create_physio_assessment(db:Session, data: PhysioAssessmentCreate, 
                              physio_id:int, resident_id:int ):
-    obj = PhysioAssessment(**data.model_dump(), 
+    obj = PhysioAssessment(**data.model_dump(exclude={"resident_id"}), 
                            resident_id=resident_id, 
                            physio_id=physio_id)
     try:
@@ -64,7 +64,7 @@ def archive_physio_assessment(db:Session, assessment_id:int):
 def create_mobility_assessment(db:Session, 
                                data:MobilityAssessmentCreate, 
                                physio_id:int, resident_id:int):
-    obj = MobilityAssessment(**data.model_dump(), physio_id=physio_id, resident_id=resident_id)
+    obj = MobilityAssessment(**data.model_dump(exclude={"resident_id"}), physio_id=physio_id, resident_id=resident_id)
 
     try:
         db.add(obj)
