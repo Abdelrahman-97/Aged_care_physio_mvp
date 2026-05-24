@@ -89,7 +89,8 @@ def get_mobility_assessment_by_filter(db:Session,
 
 def update_mobility_assessment(db:Session, data:MobilityAssessmentUpdate, assessment_id:int):
     obj = db.query(MobilityAssessment).filter(MobilityAssessment.id == assessment_id).first()
-
+    if not obj:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Assessment not found")
     for k, v in data.model_dump(exclude_unset=True).items():
         setattr(obj,k,v)
 

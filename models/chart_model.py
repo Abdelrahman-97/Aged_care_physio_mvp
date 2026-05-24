@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Column, String, DateTime, func, ForeignKey
+from sqlalchemy import Integer, Column, String, DateTime, func, ForeignKey, BOOLEAN
 from sqlalchemy.orm import relationship
 from database.connection import Base
 
@@ -10,7 +10,7 @@ class PainChart(Base):
     pain_level = Column(Integer, nullable=False)
     resident_id = Column(Integer, ForeignKey("residents.id"), nullable=False, index=True)
     physio_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    is_active = Column(bool,default=True)
+    is_active = Column(BOOLEAN,default=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 

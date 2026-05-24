@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, Column, DateTime, func, ForeignKey
+from sqlalchemy import Integer, String, Column, DateTime, func, ForeignKey,BOOLEAN
 from sqlalchemy.orm import relationship
 from database.connection import Base
 
@@ -13,7 +13,7 @@ class Resident(Base):
     room = Column(Integer, nullable=False, index=True, unique=True)
     gender = Column(String, nullable=False)
     diagnosis = Column(String, nullable=False)
-    is_active = Column(bool, default=True)
+    is_active = Column(BOOLEAN, default=True)
     created_by_physio_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     responsible_physio_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, server_default=func.now())
