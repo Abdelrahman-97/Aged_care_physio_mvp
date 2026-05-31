@@ -10,3 +10,4 @@ from .assessment_services import(create_mobility_assessment, create_physio_asses
                                  get_all_mobility_assessments,get_mobility_assessment_by_filter,
                                  get_physio_assessment_by_filter, get_all_physio_assessments)
 from .chart_service import (create_pain_chart, get_all_pain_charts, get_pain_chart_by_filter)
+from .email_service import send_email

@@ -6,6 +6,11 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str= "HS256"
     access_token_expire_minutes: int
+    email_sender: str = ""
+    email_password: str = ""
+    senior_physio_email: str = ""
+    facility_manager_email: str = ""
+    admin_email: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

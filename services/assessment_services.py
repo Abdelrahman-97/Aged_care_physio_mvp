@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
 from schemas import PhysioAssessmentCreate, PhysioAssessmentUpdate, MobilityAssessmentCreate, MobilityAssessmentUpdate
-from models import PhysioAssessment, MobilityAssessment
+from models import PhysioAssessment, MobilityAssessment, Resident, User
 from typing import Optional
 from fastapi import HTTPException, status
+from core import get_settings
+from email_service import send_email
 
 
 
@@ -15,6 +17,72 @@ def create_physio_assessment(db:Session, data: PhysioAssessmentCreate,
         db.add(obj)
         db.commit()
         db.refresh(obj)
+        resident = db.query(Resident).filter(Resident.id == obj.resident_id).first()
+        physio = db.query(User).filter(User.id == obj.physio_id).first()
+        resident_name = f"{resident.first_name} {resident.last_name}" if resident else "Unknown Resident"
+        physio_name = physio.name if physio else "Unkown Physio"
+
+
+        email_body = f"""
+A new Physiotherapy Assessment has been created.
+
+Basic Details
+-------------
+Assessment ID: {obj.id}
+Resident: {resident_name}
+Resident ID: {obj.resident_id}
+Created By: {physio_name}
+Physio ID: {obj.physio_id}
+Created At: {obj.created_at}
+
+Assessment Details
+------------------
+Past History:
+{obj.past_history}
+
+Present Pain:
+{obj.present_pain}
+
+Upper Limb:
+{obj.upper_limb}
+
+Lower Limb:
+{obj.lower_limb}
+
+Hands:
+{obj.hands}
+
+Coordination:
+{obj.coordination}
+
+Standing Balance:
+{obj.standing_balance}
+
+Sitting Balance:
+{obj.sitting_balance}
+
+Functional Outcomes:
+{obj.functional_outcomes}
+
+Summary - ROM and Muscle Power:
+{obj.summary_rom_muscle_power}
+
+Summary - Balance:
+{obj.summary_balance}
+
+Goals:
+{obj.goals}
+
+Planned Interventions:
+{obj.planned_interventions}
+
+Pain Management:
+{obj.pain_management}"""
+        
+        settings = get_settings()
+        send_email(to_email=[settings.senior_physio_email, settings.admin_email, settings.facility_manager_email],
+                   subject=f"A Physiotherapy Assessment was created by {physio_name} for resident: {resident_name}",
+                   body= email_body)
         return obj
     except:
         db.rollback()
