@@ -18,13 +18,13 @@ def get_active_users(engine):
 def physio_roles(engine):
     df = pd.read_sql("select * from users where is_active = True", engine)
     physio_roles_count = df["role"].value_counts()
-    return physio_roles_count.to_dict(orient="records")
+    return physio_roles_count.to_dict()
 
 def started_work_since(engine):
     df = pd.read_sql("select * from users where is_active =True", engine)
     df["created_at"] = pd.to_datetime(df["created_at"])
     worked_since = df.groupby("name", as_index=False)["created_at"].min()
     today = pd.Timestamp.today().normalize()
-    delta_time = (today - worked_since["created_at"]).dt.days
-    worked_since["months_since_wroking"] = (delta_time / 30.4375).astype(int)
+    worked_since["days_working"] = (today - worked_since["created_at"]).dt.days
+    worked_since["months_since_working"] = (worked_since["days_working"] / 30.4375).astype(int)
     return worked_since.to_dict(orient="records")

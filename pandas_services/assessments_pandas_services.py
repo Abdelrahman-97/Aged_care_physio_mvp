@@ -16,7 +16,7 @@ def get_overdue_physio_assessments(engine):
     df = pd.read_sql("select * from physio_assessments where is_active = True", engine)
     df["updated_at"] = pd.to_datetime(df["updated_at"])
     today = pd.Timestamp.today().normalize()
-    df["days_since_last_update"] = (today - df["updated_at"]).dt.day
+    df["days_since_last_update"] = (today - df["updated_at"]).dt.days
     df["the_months_since_last_update"] = (df["days_since_last_update"] / 30.3475).astype(int)
     df["is_overdue"] = df["the_months_since_last_update"] >= 6
     overdue = df[df["is_overdue"]]
@@ -38,7 +38,7 @@ def get_overdue_mobility_assessments(engine):
     df = pd.read_sql("select * from mobility_assessments where is_active = True", engine)
     df["updated_at"] = pd.to_datetime(df["updated_at"])
     today = pd.Timestamp.today().normalize()
-    df["days_since_last_update"] = (today - df["updated_at"]).dt.day
+    df["days_since_last_update"] = (today - df["updated_at"]).dt.days
     df["the_months_since_last_update"] = (df["days_since_last_update"] / 30.3475).astype(int)
     df["is_overdue"] = df["the_months_since_last_update"] >= 6
     overdue = df[df["is_overdue"]]
