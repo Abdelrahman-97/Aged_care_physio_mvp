@@ -28,7 +28,7 @@ def active_physio_assessments(current_user: User=Depends(require_role("Senior Ph
 def active_mobility_assessments (current_user: User=Depends(require_role("Senior Physio"))):
     return get_active_mobility_assessments(engine)
 
-@router("/overdue_physio_assessments")
+@router.get("/overdue_physio_assessments")
 def overdue_physio_assessments(current_user: User=Depends(require_role("Senior Physio"))):
     return get_overdue_physio_assessments(engine)
 
