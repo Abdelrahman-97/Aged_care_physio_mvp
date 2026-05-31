@@ -1,1 +1,1 @@
-from .connection import get_db
+from .connection import get_db, engine
